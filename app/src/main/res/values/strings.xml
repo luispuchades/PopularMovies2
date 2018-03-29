@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Popular Movies 2</string>
+
+    <!-- Text to display in the list when there are no movies [CHAR LIMIT=NONE] -->
+    <string name="no_movies">No movies found</string>
+
+    <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
+    <string name="no_internet_connection">No internet connection.</string>
+
+    <string name="lorem">ipsum dolor sit amet, consectetur adipisicing elit. Suscipit mollitia maiores voluptas numquam at nisi ex veniam quod distinctio quae. Ducimus at enim, beatae, aliquid sapiente dolorem asperiores pariatur animi.</string>
+
+
+    <!-- Settings Menu Item [CHAR LIMIT=NONE] -->
+    <!-- Settings Menu Item used to open Settings Menu from MainActivity and MovieActivity -->
+    <string name="action_settings">Settings</string>
+
+    <!-- Settings Activity Title [CHAR LIMIT=NONE] -->
+    <string name="settings_title">Movie Settings</string>
+
+    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+
+    <!-- Value in SharedPreferences for order default value -->
+    <string name="settings_order_by_default"
+        translatable="false">@string/settings_order_by_most_popular_value</string>
+
+    <!-- Label for order-by popular option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_most_popular_label">Most Popular</string>
+    <string name="settings_order_by_most_popular_value" translatable="false">popular</string>
+
+    <!-- Label for order-by most top_rated option [CHAR LIMIT=20] -->
+    <string name="settings_order_by_top_rated_label">Top Rated</string>
+    <string name="settings_order_by_top_rated_value" translatable="false">top_rated</string>
+
+    <string name="uri_builder_api_key" translatable="false">api_key</string>
+    <string name="title_activity_settings">Settings</string>
+
+
+
+    <!-- Error messages -->
+    <string name="detail_error_message">Movie data not available</string>
+    <string name="no_data">No data</string>
+
+    <!-- Lifetime and Bundle -->
+    <string name="parcel_movie">PARCEL_MOVIE</string>
+
+    <!-- activity_movie texts  -->
+    <string name="title_activity_detail">Movie Detail</string>
+    <string name="title">Title</string>
+    <string name="release_date">Release Date</string>
+    <string name="rating">Rating</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="separator">separator</string>
+    <string name="poster_image">poster image</string>
+    <string name="separatorhorizontal">separatorHorizontal</string>
+
+</resources>
