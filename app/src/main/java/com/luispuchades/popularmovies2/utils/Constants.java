@@ -31,4 +31,6 @@ public class Constants {
     // TODO: CHANGE "YOUR_API_KEY" TO THE PERSONAL KEY
     // public static final String THEMOVIEDB_API_KEY = "YOUR_API_KEY";
     public static final String THEMOVIEDB_API_KEY = "YOUR_API_KEY";
+
+    //TODO: CHECK GITHUB NAME
 }
