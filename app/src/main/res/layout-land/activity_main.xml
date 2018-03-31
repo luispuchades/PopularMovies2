@@ -17,7 +17,7 @@
         android:verticalSpacing="0dp"
         android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth"
-        tools:context="com.luispuchades.popularmovies.MainActivity" />
+        tools:context="com.luispuchades.popularmovies2.MainActivity" />
 
     <!-- Empty view is only visible when the list has no items. -->
     <TextView

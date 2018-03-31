@@ -26,6 +26,10 @@ import com.luispuchades.popularmovies2.utils.MovieLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<List<Movie>>,
         SharedPreferences.OnSharedPreferenceChangeListener {
@@ -42,22 +46,50 @@ public class MainActivity extends AppCompatActivity
     /** Adapter for the list of movies */
     private MovieAdapter mAdapter;
 
-    /** TextView that is displayed when the list is empty */
-    private TextView mEmptyStateTextView;
+    /**
+     *****************
+     * Binding views *
+     *****************
+     */
 
-    /** GridView for movie posters*/
-    private GridView mGridView;
+    @BindView(R.id.empty_view)
+    TextView mEmptyStateTextView;
+
+    @BindView(R.id.loading_indicator)
+    View loadingIndicator;
+
+    // GridView for movie posters
+    @BindView(R.id.movies_gv)
+    GridView mGridView;
+
+    /**
+     *********************
+     * Binding Resources *
+     *********************
+     */
+
+    @BindString(R.string.no_internet_connection)
+    String noInternetConnection;
+
+    @BindString(R.string.no_movies)
+    String noMovies;
+
+    @BindString(R.string.settings_order_by_key)
+    String settingsOrderByKey;
+
+    @BindString(R.string.settings_order_by_default)
+    String settingsOrderByDefault;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Find a reference to the {@link GridView} in the layout
-        mGridView = findViewById(R.id.movies_gv);
+        // Initiation of ButterKnife to bind views
+        ButterKnife.bind(this);
 
         // If the list of movies is empty then setEmptyView
-        mEmptyStateTextView = findViewById(R.id.empty_view);
         mGridView.setEmptyView(mEmptyStateTextView);
 
         mAdapter = new MovieAdapter(this, new ArrayList<Movie>());
@@ -69,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         // Obtain a reference to the SharedPreferences file for this app
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // And register to be notified of preference changes
-        // So ww know when the user has adjusted the query settings
+        // So we know when the user has adjusted the query settings
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         // Set an item click listener on the GridView, which sends an intent to a new activity
@@ -80,8 +112,6 @@ public class MainActivity extends AppCompatActivity
                 // Find the current movie that was clicked on
                 Movie currentMovie = mAdapter.getItem(position);
 
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
-                // Uri movieUri = Uri.parse(currentMovie.getMoviePosterPath());
                 launchMovieActivity(currentMovie);
             }
         });
@@ -91,7 +121,10 @@ public class MainActivity extends AppCompatActivity
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+        }
 
         // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -105,11 +138,10 @@ public class MainActivity extends AppCompatActivity
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
-            View loadingIndicator = findViewById(R.id.loading_indicator);
             loadingIndicator.setVisibility(View.GONE);
 
             // Update empty state with no connection error message
-            mEmptyStateTextView.setText(R.string.no_internet_connection);
+            mEmptyStateTextView.setText(noInternetConnection);
         }
     }
 
@@ -126,7 +158,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(getString(R.string.settings_order_by_key))) {
+        if(key.equals(settingsOrderByKey)) {
             //Clear the ListView as a new query will be kicked off
             mAdapter.clear();
 
@@ -134,7 +166,6 @@ public class MainActivity extends AppCompatActivity
             mEmptyStateTextView.setVisibility(View.GONE);
 
             //Show the loading indicator while new data is being fetched
-            View loadingIndicator = findViewById(R.id.loading_indicator);
             loadingIndicator.setVisibility(View.VISIBLE);
 
             //Restart the loader to require THEMOVIEDB as the query settings have been updated
@@ -149,8 +180,8 @@ public class MainActivity extends AppCompatActivity
                 PreferenceManager.getDefaultSharedPreferences(this);
 
         String orderBy = sharedPreferences.getString(
-                getString(R.string.settings_order_by_key),
-                getString(R.string.settings_order_by_default)
+                settingsOrderByKey,
+                settingsOrderByDefault
         );
 
         Uri baseUri = Uri.parse(Constants.THEMOVIEDB_BASE_URL);
@@ -167,11 +198,11 @@ public class MainActivity extends AppCompatActivity
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> movies) {
 
         // Hide loading indicator because the data has been loaded
-        View loadingIndicator = findViewById(R.id.loading_indicator);
+        // View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
         // Set empty state text to display "No movies found."
-        mEmptyStateTextView.setText(R.string.no_movies);
+        mEmptyStateTextView.setText(noMovies);
 
 
         // Clear the adapter of previous movie data
@@ -180,7 +211,7 @@ public class MainActivity extends AppCompatActivity
         // If there is a valid list of {@link Movie}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
-            Log.d(LOG_TAG, "Aquí llega 1");
+            Log.d(LOG_TAG, "CHECK_1");
             mAdapter.addAll(movies);
         }
     }

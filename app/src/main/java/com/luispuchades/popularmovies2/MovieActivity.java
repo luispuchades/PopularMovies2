@@ -10,34 +10,72 @@ import android.widget.Toast;
 import com.luispuchades.popularmovies2.utils.Constants;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MovieActivity extends AppCompatActivity {
 
-    private TextView titleTv;
-    private TextView voteAverageTv;
-    private TextView releaseDateTv;
-    private TextView overviewTv;
-    private ImageView posterIv;
-
     private String mMovieTitle;
-    private Double mMovieVoteAverage;
-    private String mMovieReleaseDate;
-    private String mMovieOverview;
     private String mMoviePosterPath;
+
+    /**
+     *****************
+     * Binding views *
+     *****************
+     */
+
+    @BindView(R.id.title_tv)
+    TextView titleTv;
+
+    @BindView(R.id.vote_average_tv)
+    TextView voteAverageTv;
+
+    @BindView(R.id.release_date_tv)
+    TextView releaseDateTv;
+
+    @BindView(R.id.overview_tv)
+    TextView overviewTv;
+
+    @BindView(R.id.poster_iv)
+    ImageView posterIv;
+
+    /**
+     *********************
+     * Binding Resources *
+     *********************
+     */
+
+    @BindString(R.string.no_data)
+    String noData;
+
+    @BindString(R.string.detail_error_message)
+    String detailErrorMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
 
+        // Initiation of ButterKnife to bind views
+        ButterKnife.bind(this);
+
         Intent intent = getIntent();
         if (intent == null) {
             closeOnError();
         }
 
-        Movie mIntentExtraMovie = intent.getParcelableExtra(Constants.EXTRA_MOVIE);
+        Movie mIntentExtraMovie = null;
+        if (intent != null) {
+            mIntentExtraMovie = intent.getParcelableExtra(Constants.EXTRA_MOVIE);
+        }
 
-        populateUI(mIntentExtraMovie);
+        if (mIntentExtraMovie != null) {
+            populateUI(mIntentExtraMovie);
+        }
+
         Picasso.with(this)
                 .load(Constants.THEMOVIEDB_POSTER_PATH_BASE_URL +
                         Constants.THEMOVIEDB_POSTER_PHONE_SIZE + mMoviePosterPath)
@@ -48,25 +86,17 @@ public class MovieActivity extends AppCompatActivity {
 
     private void closeOnError() {
         finish();
-        Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, detailErrorMessage, Toast.LENGTH_SHORT).show();
     }
 
     private void populateUI(Movie currentMovie) {
 
-        // Capture of views from movies_list_item.xml
-        titleTv = findViewById(R.id.title_tv);
-        voteAverageTv = findViewById(R.id.vote_average_tv);
-        releaseDateTv = findViewById(R.id.release_date_tv);
-        overviewTv = findViewById(R.id.overview_tv);
-        posterIv = findViewById(R.id.poster_iv);
-
         // Set text to views
         mMovieTitle = currentMovie.getMovieTitle();
-        mMovieVoteAverage = currentMovie.getMovieVoteAverage();
-        mMovieReleaseDate = currentMovie.getMovieReleaseDate();
-        mMovieOverview = currentMovie.getMovieOverview();
+        Double mMovieVoteAverage = currentMovie.getMovieVoteAverage();
+        String mMovieReleaseDate = currentMovie.getMovieReleaseDate();
+        String mMovieOverview = currentMovie.getMovieOverview();
         mMoviePosterPath = currentMovie.getMoviePosterPath();
-
 
         titleTv.setText(checkData(mMovieTitle));
 
@@ -79,7 +109,7 @@ public class MovieActivity extends AppCompatActivity {
 
     private String checkData(String string) {
         if (string.equals("")) {
-            return getString(R.string.no_data);
+            return noData;
         } else {
             return string;
         }
