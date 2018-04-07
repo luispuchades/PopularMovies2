@@ -3,6 +3,8 @@ package com.luispuchades.popularmovies2;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.luispuchades.popularmovies2.utils.Constants;
+
 
 public class Movie implements Parcelable {
 
@@ -89,7 +91,8 @@ public class Movie implements Parcelable {
     /* POSTER PATH */
     public String getMoviePosterPath() {
 
-        return mMoviePosterPath;
+        return Constants.THEMOVIEDB_POSTER_PATH_BASE_URL +
+                Constants.THEMOVIEDB_POSTER_PHONE_SIZE + mMoviePosterPath;
     }
     public void setMoviePosterPath(String moviePosterPath) {
         mMoviePosterPath = moviePosterPath;

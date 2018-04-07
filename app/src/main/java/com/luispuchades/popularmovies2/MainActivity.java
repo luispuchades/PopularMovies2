@@ -11,13 +11,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.luispuchades.popularmovies2.utils.Constants;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity
     /** Adapter for the list of movies */
     private MovieAdapter mAdapter;
 
+    // TODO: CHECK
+    // private RecyclerView.LayoutManager mLayoutManager;
+
     /**
      *****************
      * Binding views *
@@ -59,8 +63,8 @@ public class MainActivity extends AppCompatActivity
     View loadingIndicator;
 
     // GridView for movie posters
-    @BindView(R.id.movies_gv)
-    GridView mGridView;
+    @BindView(R.id.movies_rv)
+    RecyclerView mRecyclerView;
 
     /**
      *********************
@@ -89,14 +93,31 @@ public class MainActivity extends AppCompatActivity
         // Initiation of ButterKnife to bind views
         ButterKnife.bind(this);
 
+        // Use setHasFixedSize(true) on mRecyclerView to designate that all items in the list
+        // will have the same size
+        mRecyclerView.setHasFixedSize(true);
+
+        // TODO: CHECK
+        // mLayoutManager = new GridLayoutManager();
+
         // If the list of movies is empty then setEmptyView
-        mGridView.setEmptyView(mEmptyStateTextView);
+        // TODO: CHECK
+        // mRecyclerView.setEmptyView(mEmptyStateTextView);
+
+        GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager
+                .VERTICAL, false);
+
+        // Set the layoutManager on mRecyclerView
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
 
         mAdapter = new MovieAdapter(this, new ArrayList<Movie>());
 
         // Set the adapter on the {@link GridView}
         // so the list can be populated in the user interface
-        mGridView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
+
+        // TODO: HASTA AQUI IMPLEMENTACION DE RECYCLERVIEW CORRECTA
 
         // Obtain a reference to the SharedPreferences file for this app
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -104,9 +125,11 @@ public class MainActivity extends AppCompatActivity
         // So we know when the user has adjusted the query settings
         prefs.registerOnSharedPreferenceChangeListener(this);
 
+        // TODO: CHECK
         // Set an item click listener on the GridView, which sends an intent to a new activity
         // with detailed information about the choosen film
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*
+        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current movie that was clicked on
@@ -115,6 +138,7 @@ public class MainActivity extends AppCompatActivity
                 launchMovieActivity(currentMovie);
             }
         });
+*/
 
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -145,22 +169,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void launchMovieActivity(Movie movie) {
-        // Create a new intent to view the movie details
-        Intent movieIntent = new Intent(getApplicationContext(), MovieActivity.class);
-
-        // Pass current movie information to the new activity calles MovieActivity
-        movieIntent.putExtra(Constants.EXTRA_MOVIE, movie);
-
-        // Send the intent to launch a new activity
-        startActivity(movieIntent);
-    }
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals(settingsOrderByKey)) {
             //Clear the ListView as a new query will be kicked off
-            mAdapter.clear();
+            //mAdapter.clear();
 
             //Hide the empty state text view as the loading indicator will be displayed.
             mEmptyStateTextView.setVisibility(View.GONE);
@@ -205,21 +218,25 @@ public class MainActivity extends AppCompatActivity
         mEmptyStateTextView.setText(noMovies);
 
 
+        // TODO: CHECK
         // Clear the adapter of previous movie data
-        mAdapter.clear();
+        // mAdapter.clear();
 
         // If there is a valid list of {@link Movie}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (movies != null && !movies.isEmpty()) {
-            Log.d(LOG_TAG, "CHECK_1");
-            mAdapter.addAll(movies);
+            Log.d(LOG_TAG, "CHECK_1:");
+            // TODO: CHECK
+            // mAdapter.addAll(movies);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
         // Loader reset, so we can clear out our existing data.
-        mAdapter.clear();
+        // TODO: CHECK
+        // mAdapter.clear();
+
     }
 
     @Override
