@@ -44,6 +44,10 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
+        <provider
+            android:authorities="com.luispuchades.popularmovies2"
+            android:name=".data.MoviesProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
