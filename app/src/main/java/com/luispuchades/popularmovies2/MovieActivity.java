@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.luispuchades.popularmovies2.models.Movie;
 import com.luispuchades.popularmovies2.utils.Constants;
 import com.squareup.picasso.Picasso;
 

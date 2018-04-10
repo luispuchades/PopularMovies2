@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.luispuchades.popularmovies2.models.Movie;
 import com.luispuchades.popularmovies2.utils.Constants;
 import com.squareup.picasso.Picasso;
 

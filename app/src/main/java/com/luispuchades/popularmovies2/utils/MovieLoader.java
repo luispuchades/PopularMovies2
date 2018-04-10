@@ -4,7 +4,7 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
-import com.luispuchades.popularmovies2.Movie;
+import com.luispuchades.popularmovies2.models.Movie;
 
 import java.util.List;
 

@@ -45,7 +45,7 @@ public class MoviesContract {
 
         /* Movie table with columns name self-explaining*/
         /* Used internally as the name of our movie table. */
-        public static final String TABLE_NAME = "movie";
+        public static final String TABLE_NAME = "favorites";
 
         public static final String COLUMN_MOVIE_ID = "movie_id";
         public static final String COLUMN_MOVIE_TITLE = "movie_title";
@@ -53,5 +53,6 @@ public class MoviesContract {
         public static final String COLUMN_MOVIE_RELEASE_DATE = "movie_release_date";
         public static final String COLUMN_MOVIE_OVERVIEW = "movie_overview";
         public static final String COLUMN_MOVIE_POSTER_PATH ="movie_poster";
+        public static final String COLUMN_MOVIE_BACKDROP_PATH = "backdrop_path";
     }
 }

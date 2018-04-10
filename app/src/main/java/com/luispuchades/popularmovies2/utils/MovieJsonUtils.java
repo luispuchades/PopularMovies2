@@ -3,7 +3,9 @@ package com.luispuchades.popularmovies2.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.luispuchades.popularmovies2.Movie;
+import com.luispuchades.popularmovies2.models.Movie;
+import com.luispuchades.popularmovies2.models.Review;
+import com.luispuchades.popularmovies2.models.Video;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,12 +32,28 @@ public class MovieJsonUtils {
      * THE MOVIEDATABASE API
      **/
     private static final String THEMOVIEDB_RESULTS = "results";
+    /* Movies variables */
+    private static final String THEMOBIEDB_MOVIE_ID = "id";
     private static final String THEMOVIEDB_TITLE = "title";
     private static final String THEMOVIEDB_VOTE_AVERAGE = "vote_average";
     private static final String THEMOVIEDB_RELEASE_DATE = "release_date";
     private static final String THEMOVIEDB_OVERVIEW = "overview";
     private static final String THEMOVIEDB_POSTER_PATH = "poster_path";
-
+    private static final String THEMOVIEDB_BACKDROP_PATH = "backdrop_path";
+    /* Movie Review Variables*/
+    private static final String THEMOVIEDB_VIDEO_ID = "id";
+    private static final String THEMOVIEDB_VIDEO_LANGUAGE_CODE = "iso_639_1";
+    private static final String THEMOVIEDB_VIDEO_ISO_COUNTRY_CODE = "iso_3166_1";
+    private static final String THEMOVIEDB_VIDEO_KEY = "key";
+    private static final String THEMOVIEDB_VIDEO_NAME = "name";
+    private static final String THEMOVIEDB_VIDEO_SITE = "site";
+    private static final String THEMOVIEDB_VIDEO_SIZE = "size";
+    private static final String THEMOVIEDB_VIDEO_TYPE = "type";
+    /* Movie Review Variables */
+    private static final String THEMOVIEDB_REVIEW_ID = "id";
+    private static final String THEMOVIEDB_REVIEW_AUTHOR = "author";
+    private static final String THEMOVIEDB_REVIEW_CONTENT = "content";
+    private static final String THEMOVIEDB_REVIEW_URL = "url";
 
 
 
@@ -57,13 +75,51 @@ public class MovieJsonUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Movie}s
-        List<Movie> movies = extractFeatureFromJson(jsonResponse);
+        List<Movie> movies = extractMovieFromJson(jsonResponse);
 
         // Return the list of {@link Movie}s
         return movies;
     }
 
+    public static List<Video> fetchVideoData(String requestUrl) {
+        Log.i(LOG_TAG, "fetchVideoData() called");
+        //Create URL object
+        URL url = createUrl(requestUrl);
 
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Video}s
+        List<Video> videos = extractVideoFromJson(jsonResponse);
+
+        // Return the list of {@link Video}s
+        return videos;
+    }
+
+    public static List<Review> fetchReviewData(String requestUrl) {
+        Log.i(LOG_TAG, "fetchReviewData() called");
+        //Create URL object
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Video}s
+        List<Review> reviews = extractReviewFromJson(jsonResponse);
+
+        // Return the list of {@link Video}s
+        return reviews;
+    }
     /**
      * Returns new URL object from the given string URL.
      */
@@ -144,7 +200,7 @@ public class MovieJsonUtils {
      * Return a list of {@link Movie} objects that has been built up from parsing the given JSON
      * response
      */
-    private static List<Movie> extractFeatureFromJson(String movieJsonString) {
+    private static List<Movie> extractMovieFromJson(String movieJsonString) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(movieJsonString)) {
             return null;
@@ -171,6 +227,9 @@ public class MovieJsonUtils {
                 // Get a single movie at position i within the list of movies
                 JSONObject currentJsonMovie = moviesJsonArray.getJSONObject(i);
 
+                /* Extract the ID value */
+                int movieId = currentJsonMovie.getInt(THEMOBIEDB_MOVIE_ID);
+
                 // Extract the value for the key "title"
                 String titleJson = currentJsonMovie.getString(THEMOVIEDB_TITLE);
 
@@ -185,12 +244,14 @@ public class MovieJsonUtils {
 
                 String posterPathJson = currentJsonMovie.getString(THEMOVIEDB_POSTER_PATH);
 
+                String backdropPathJson = currentJsonMovie.getString(THEMOVIEDB_BACKDROP_PATH);
+
                 // Create a new {@link Movie} object with the title, vote_average, release_date,
                 // overview and get the poster path from the JSON response.
-                Movie movie = new Movie(titleJson, voteAverageJson, releaseDateJson,
-                        overviewJson, posterPathJson);
+                Movie movie = new Movie(movieId, titleJson, voteAverageJson, releaseDateJson,
+                        overviewJson, posterPathJson, backdropPathJson);
 
-                // Add the new {@link Movie} to the list of movies.
+                // Add the new {@link Movie} to the list of movies,
                 movies.add(movie);
             }
 
@@ -203,6 +264,141 @@ public class MovieJsonUtils {
 
         //Return the list of movies
         return movies;
+    }
+
+    /**
+     * Return a list of {@link Video} objects that has been built up from parsing the given JSON
+     * response
+     */
+    private static List<Video> extractVideoFromJson (String videoJsonString) {
+        // If the JSON string is empty or null, then return early.
+        if(TextUtils.isEmpty(videoJsonString)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding videos to
+        List<Video> videos = new ArrayList<>();
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON is
+        // formatted, a JSONException exception object will be thrown.
+        // Cash the exception so the app doesn't crash and prin the message to the logs.
+        try {
+
+            // Create a JSONObject from the JSON response string
+            JSONObject videosJson = new JSONObject(videoJsonString);
+
+            // Extract the JSONArray associated with the key called "results", which represents a
+            // list of results (or videos)
+            JSONArray videosJsonArray = videosJson.getJSONArray(THEMOVIEDB_RESULTS);
+
+            // For each video found in the videosJsonArray, create a {@Link Video} object
+            for ( int i = 0; i < videosJsonArray.length(); i++ ) {
+                // Get a single video at position i within the list of videos
+                JSONObject currentJsonVideo = videosJsonArray.getJSONObject(i);
+
+                /* Extract the video Id value */
+                String videoId = currentJsonVideo.getString(THEMOVIEDB_VIDEO_ID);
+
+                /* Extract the value for the video language code */
+                String videoLanguageCodeJson = currentJsonVideo.getString
+                        (THEMOVIEDB_VIDEO_LANGUAGE_CODE);
+
+                /* Extract the value for the video country code */
+                String videoCountryCodeJson = currentJsonVideo.getString
+                        (THEMOVIEDB_VIDEO_ISO_COUNTRY_CODE);
+
+                /* Extract the value for the video key */
+                String videoKeyJson = currentJsonVideo.getString(THEMOVIEDB_VIDEO_KEY);
+
+                /* Extract the value for the video name */
+                String videoNameJson = currentJsonVideo.getString(THEMOVIEDB_VIDEO_NAME);
+
+                /* Extract the value for the video site */
+                String videoSiteJson = currentJsonVideo.getString(THEMOVIEDB_VIDEO_SITE);
+
+                /* Extract the value for the video siZe */
+                String videoSizeJson = currentJsonVideo.getString(THEMOVIEDB_VIDEO_SIZE);
+
+                /* Extract the value for the video type */
+                String videoTypeJson = currentJsonVideo.getString(THEMOVIEDB_VIDEO_TYPE);
+
+                /* Create a new {@Link Video} object with the video id, laguage code, country
+                 * code, key, name, site, size and type.
+                 */
+                Video video = new Video (videoId, videoLanguageCodeJson, videoCountryCodeJson,
+                        videoKeyJson, videoNameJson, videoSiteJson, videoSizeJson, videoTypeJson);
+
+                /* Add the new {@Link Video} to the list of videos */
+                videos.add(video);
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception
+            Log.e(LOG_TAG, "Problem parsing the video JSON resutls", e);
+        }
+
+        return videos;
+    }
+
+
+    private static List<Review> extractReviewFromJson (String reviewJsonString) {
+        // If the JSON string is empty or null, then return early.
+        if(TextUtils.isEmpty(reviewJsonString)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding reviews to
+        List<Review> reviews = new ArrayList<>();
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON is
+        // formatted, a JSONException exception object will be thrown.
+        // Cash the exception so the app doesn't crash and prin the message to the logs.
+        try {
+
+            // Create a JSONObject from the JSON response string
+            JSONObject reviewsJson = new JSONObject(reviewJsonString);
+
+            // Extract the JSONArray associated with the key called "results", which represents a
+            // list of results (or reviews)
+            JSONArray reviewsJsonArray = reviewsJson.getJSONArray(THEMOVIEDB_RESULTS);
+
+            // For each review found in the reviewsJsonArray, create a {@Link Review} object
+            for ( int i = 0; i < reviewsJsonArray.length(); i++ ) {
+                // Get a single review at position i within the list of videos
+                JSONObject currentReviewJson = reviewsJsonArray.getJSONObject(i);
+
+                /* Extract the review Id value */
+                String reviewId = currentReviewJson.getString(THEMOVIEDB_REVIEW_ID);
+
+                /* Extract the value for the author */
+                String reviewAuthorJson = currentReviewJson.getString(THEMOVIEDB_REVIEW_AUTHOR);
+
+                /* Extract the value for the review content */
+                String reviewContentJson = currentReviewJson.getString
+                        (THEMOVIEDB_REVIEW_CONTENT);
+
+                /* Extract the value for the review url */
+                String reviewUrlJson = currentReviewJson.getString(THEMOVIEDB_REVIEW_URL);
+
+                /* Create a new {@Link Review} object with the review id, author, content and url */
+
+                Review review = new Review(reviewId, reviewAuthorJson, reviewContentJson,
+                        reviewUrlJson);
+
+                /* Add the new {@Link Review} to the list of videos */
+                reviews.add(review);
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception
+            Log.e(LOG_TAG, "Problem parsing the video JSON resutls", e);
+        }
+
+        return reviews;
     }
 }
 

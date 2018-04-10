@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.luispuchades.popularmovies2.models.Movie;
 import com.luispuchades.popularmovies2.utils.ConnectionUnit;
 import com.luispuchades.popularmovies2.utils.Constants;
 import com.luispuchades.popularmovies2.utils.MovieLoader;

@@ -182,8 +182,7 @@ public class MoviesProvider extends ContentProvider {
              * a particular movie.
              */
             case CODE_FAVORITES_ID:
-                selection = MovieEntry._ID + "=?";
-                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                String movieId = uri.getPathSegments().get(1);
                 /*
                  * In order to determine the date associated with this URI, we look at the last
                  * path segment.
@@ -205,8 +204,8 @@ public class MoviesProvider extends ContentProvider {
                          * within the selectionArguments array will be inserted into the
                          * selection statement by SQLite under the hood.
                          */
-                        selection,
-                        selectionArgs,
+                        "movieId=?",
+                        new String[]{movieId},
                         null,
                         null,
                         sortOrder);
@@ -237,10 +236,10 @@ public class MoviesProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
 
         final SQLiteDatabase db = mMoviesDbHelper.getWritableDatabase();
-        Uri insertRecord = null;
+        Uri returnUri = null;
 
         switch (sUriMatcher.match(uri)) {
 
@@ -251,7 +250,7 @@ public class MoviesProvider extends ContentProvider {
                         values);
 
                 if (insertRecordId > 0) {
-                    insertRecord = ContentUris.withAppendedId(MovieEntry.CONTENT_URI,
+                    returnUri = ContentUris.withAppendedId(MovieEntry.CONTENT_URI,
                             insertRecordId);
                 }
                 break;
@@ -262,7 +261,7 @@ public class MoviesProvider extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
 
-        return insertRecord;
+        return returnUri;
     }
 
     /**
@@ -274,15 +273,13 @@ public class MoviesProvider extends ContentProvider {
      * @return The number of rows deleted
      */
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection,
-                      @Nullable String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
 
         final SQLiteDatabase db = mMoviesDbHelper.getWritableDatabase();
 
         /* Users of the delete method will expect the number of rows deleted to be returned. */
 
-        int numRowsDeleted = 0;
-
+        int moviesDeleted;
         /*
          * If we pass null as the selection to SQLiteDatabase#delete, our entire table will be
          * deleted. However, if we do pass null and delete all of the rows in the table, we won't
@@ -290,25 +287,26 @@ public class MoviesProvider extends ContentProvider {
          * passing "1" for the selection will delete all rows and return the number of rows
          * deleted, which is what the caller of this method expects.
          */
-        if (null == selection) selection = "1";
 
         switch (sUriMatcher.match(uri)) {
-            case CODE_FAVORITES:
+            case CODE_FAVORITES_ID:
+                String movieId = uri.getPathSegments().get(1);
 
-                db.delete(MovieEntry.TABLE_NAME,
-                        selection,
-                        selectionArgs);
+                moviesDeleted = db.delete(
+                        MovieEntry.TABLE_NAME,
+                        MovieEntry.COLUMN_MOVIE_ID + "=?",
+                        new String[]{movieId});
                 break;
 
             default:
-                throw new IllegalArgumentException("delete doen't support: " + uri.toString());
+                throw new IllegalArgumentException("delete doesn't support: " + uri.toString());
         }
         /* If we actually deleted any rows, notify that a change has occurred to this URI */
-        if (numRowsDeleted != 0) {
+        if (moviesDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
-        return numRowsDeleted;
+        return moviesDeleted;
     }
 
     @Override

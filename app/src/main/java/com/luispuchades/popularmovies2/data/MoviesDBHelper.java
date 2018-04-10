@@ -16,7 +16,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
      * This is the name of our database. Database names should be descriptive and end with the
      * .db extension.
      */
-    private static final String DATABASE_NAME = "movies.db";
+    private static final String DATABASE_NAME = "favoriteMoviesDb.db";
 
     /*
      * If you change the database schema, you must increment the database version or the onUpgrade
@@ -54,6 +54,7 @@ public class MoviesDBHelper extends SQLiteOpenHelper {
                 MovieEntry.COLUMN_MOVIE_RELEASE_DATE + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_MOVIE_OVERVIEW + " TEXT NOT NULL, " +
                 MovieEntry.COLUMN_MOVIE_POSTER_PATH + " TEXT NOT NULL, " +
+                MovieEntry.COLUMN_MOVIE_BACKDROP_PATH + " TEXT NOT NULL, " +
                 /*
                  * To ensure this table can only contain one movie entry per date, we declare
                  * the date column to be unique. We also specify "ON CONFLICT REPLACE". This tells
