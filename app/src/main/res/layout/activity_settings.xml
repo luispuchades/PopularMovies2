@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Layout for our Settings Activity, containing a Preference Fragment -->
+
 <fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:name="com.luispuchades.popularmovies2.SettingsFragment"

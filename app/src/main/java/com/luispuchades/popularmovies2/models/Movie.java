@@ -23,7 +23,7 @@ public class Movie implements Parcelable {
     private String mMovieTitle;
 
     /* Double for the User Rating "vote_average"*/
-    private Double mMovieVoteAverage;
+    private String mMovieVoteAverage;
 
     /* String for the Release Date */
     private String mMovieReleaseDate;
@@ -51,7 +51,7 @@ public class Movie implements Parcelable {
      *
      */
 
-    public Movie(int movieId, String movieTitle,Double voteAverage, String
+    public Movie(int movieId, String movieTitle,String voteAverage, String
             movieReleaseDate, String movieOverview,  String moviePosterPath, String
             movieBackDropPath) {
         this.mMovieId = movieId;
@@ -72,7 +72,7 @@ public class Movie implements Parcelable {
     private Movie(Parcel in) {
         mMovieId = in.readInt();
         mMovieTitle = in.readString();
-        mMovieVoteAverage = in.readDouble();
+        mMovieVoteAverage = in.readString();
         mMovieReleaseDate = in.readString();
         mMovieOverview = in.readString();
         mMoviePosterPath = in.readString();
@@ -100,10 +100,10 @@ public class Movie implements Parcelable {
     }
 
     /* VOTE AVERAGE */
-    public Double getMovieVoteAverage() {
+    public String getMovieVoteAverage() {
         return mMovieVoteAverage;
     }
-    public void setMovieVoteAverage(Double movieVoteAverage) {
+    public void setMovieVoteAverage(String movieVoteAverage) {
         mMovieVoteAverage = movieVoteAverage;
     }
 
@@ -153,7 +153,7 @@ public class Movie implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(mMovieId);
         parcel.writeString(mMovieTitle);
-        parcel.writeDouble(mMovieVoteAverage);
+        parcel.writeString(mMovieVoteAverage);
         parcel.writeString(mMovieReleaseDate);
         parcel.writeString(mMovieOverview);
         parcel.writeString(mMoviePosterPath);

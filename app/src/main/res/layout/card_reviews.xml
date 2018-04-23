@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/movie_detail_reviews_card_margin"
+    app:cardElevation="@dimen/movie_grid_card_view_elevation">
+
+    <GridLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignBounds"
+        android:columnCount="1"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_review_author"
+            android:layout_columnSpan="1"
+            android:layout_gravity="start"
+            android:textSize="@dimen/movie_grid_card_view_text_size"
+            tools:text="Review by: Fulanito de Tal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_review_content"
+            android:layout_columnSpan="1"
+            android:layout_gravity="start"
+            android:textSize="@dimen/movie_grid_card_view_text_size"
+            android:ellipsize="end"
+            android:maxLines="@integer/review_collapsed_max_lines"
+            tools:text="@string/lorem" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_review_show_more"
+            android:layout_columnSpan="1"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ripple_color_accent"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="@string/movie_detail_show_more"
+            app:srcCompat="@drawable/ic_expand_more" />
+
+    </GridLayout>
+
+</android.support.v7.widget.CardView>

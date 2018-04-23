@@ -54,5 +54,12 @@ public class MoviesContract {
         public static final String COLUMN_MOVIE_OVERVIEW = "movie_overview";
         public static final String COLUMN_MOVIE_POSTER_PATH ="movie_poster";
         public static final String COLUMN_MOVIE_BACKDROP_PATH = "backdrop_path";
+
+
+        public static Uri buildFavoriteUriWithMovieId(int movieId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath(Integer.toString(movieId))
+                    .build();
+        }
     }
 }

@@ -3,10 +3,30 @@
     <string-array name="settings_order_by_labels">
         <item>@string/settings_order_by_most_popular_label</item>
         <item>@string/settings_order_by_top_rated_label</item>
+        <item>@string/settings_favorites_label</item>
     </string-array>
 
     <string-array name="settings_order_by_values">
         <item>@string/settings_order_by_most_popular_value</item>
         <item>@string/settings_order_by_top_rated_value</item>
+        <item>@string/settings_favorites_value</item>
+    </string-array>
+
+    <string-array name="settings_locale_labels">
+        <item>@string/settings_locale_label_enGB</item>
+        <item>@string/settings_locale_label_enUS</item>
+        <item>@string/settings_locale_label_frFR</item>
+        <item>@string/settings_locale_label_deDE</item>
+        <item>@string/settings_locale_label_itIT</item>
+        <item>@string/settings_locale_label_esES</item>
+    </string-array>
+
+    <string-array name="settings_locale_values">
+        <item>@string/settings_locale_enGB_value</item>
+        <item>@string/settings_locale_enUS_value</item>
+        <item>@string/settings_locale_frFR_value</item>
+        <item>@string/settings_locale_deDE_value</item>
+        <item>@string/settings_locale_itIT_value</item>
+        <item>@string/settings_locale_esES_value</item>
     </string-array>
 </resources>

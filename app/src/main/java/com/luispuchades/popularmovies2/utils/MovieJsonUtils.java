@@ -234,7 +234,7 @@ public class MovieJsonUtils {
                 String titleJson = currentJsonMovie.getString(THEMOVIEDB_TITLE);
 
                 // Extract the value for the key "vote_average"
-                Double voteAverageJson = currentJsonMovie.getDouble(THEMOVIEDB_VOTE_AVERAGE);
+                String voteAverageJson = currentJsonMovie.getString(THEMOVIEDB_VOTE_AVERAGE);
 
                 // Extract the value for the key "release_date"
                 String releaseDateJson = currentJsonMovie.getString(THEMOVIEDB_RELEASE_DATE);

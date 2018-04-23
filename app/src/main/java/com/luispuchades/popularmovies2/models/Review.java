@@ -11,8 +11,8 @@ import android.os.Parcelable;
 public class Review implements Parcelable {
     /* Review details layout contains review id, author, content and url */
 
-    /* int for the review Id */
-    private int mReviewId;
+    /* String for the review Id */
+    private String mReviewId;
 
     /* String for the review author */
     private String mReviewAuthor;
@@ -25,7 +25,7 @@ public class Review implements Parcelable {
 
     /**
      * Public constructor
-     *  @param reviewId is a integer that contains the review id.
+     * @param reviewId is a string that contains the review id.
      * @param reviewAuthor is a string that contains the review author.
      * @param reviewContent is a string that contains the review content.
      * @param reviewUrl is a string that contains the review url.   *
@@ -46,7 +46,7 @@ public class Review implements Parcelable {
      * @param in a parcel from which to read this object
      */
     private Review(Parcel in) {
-        mReviewId = in.readInt();
+        mReviewId = in.readString();
         mReviewAuthor = in.readString();
         mReviewContent = in.readString();
         mReviewUrl = in.readString();
@@ -59,7 +59,7 @@ public class Review implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mReviewId);
+        parcel.writeString(mReviewId);
         parcel.writeString(mReviewAuthor);
         parcel.writeString(mReviewContent);
         parcel.writeString(mReviewUrl);
@@ -70,10 +70,10 @@ public class Review implements Parcelable {
     /*********************/
 
     /* REVIEW ID */
-    public int getReviewId() {
+    public String getReviewId() {
         return mReviewId;
     }
-    public void setReviewId(int reviewId) {
+    public void setReviewId(String reviewId) {
         mReviewId = reviewId;
     }
 

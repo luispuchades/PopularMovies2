@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- TODO: PROVISIONAL - REFACTOR -->
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="material_padding_margin">16dp</dimen>
+    <dimen name="movie_grid_card_view_text_size">16sp</dimen>
+    <dimen name="movie_grid_card_view_elevation">4dp</dimen>
+    <dimen name="movie_detail_text_size">20sp</dimen>
+    <dimen name="movie_detail_videos_card_margin">8dp</dimen>
+    <dimen name="movie_detail_videos_card_elevation">4dp</dimen>
+    <dimen name="movie_detail_reviews_card_margin">4dp</dimen>
+    <dimen name="movie_detail_reviews_card_elevation">4dp</dimen>
+    <dimen name="movie_detail_reviews_author_text_size">20sp</dimen>
+    <dimen name="movie_detail_reviews_content_text_size">18sp</dimen>
+
+    <integer name="grid_columns">2</integer>
+    <integer name="default_grid_columns">3</integer>
+    <integer name="review_collapsed_max_lines">4</integer>
+
+    <string name="backdrop_size">w780</string>
+    <string name="poster_size">w342</string>
+
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

@@ -1,6 +1,7 @@
 package com.luispuchades.popularmovies2;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -12,20 +13,22 @@ import android.view.MenuItem;
  *
  * For example, when the user is in the DetailActivity and clicks the settings option in the menu,
  * and then clicks the up button, we want to navigate back to the DetailActivity. If the user
- * navigates to the SettingsActivity from the MainActivity, then we want to navigate back to the
- * MainActivity when the user clicks the up button from the SettingsActivity.
+ * navigates to the SettingsActivity from the corresponding activity, then we want to navigate
+ * back to this activity when the user clicks the up button from the SettingsActivity.
  */
 
 public class SettingsActivity extends AppCompatActivity {
-
-    /* Tag for Log Messages */
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+
+        if(null != actionBar) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
     }
 
     @Override

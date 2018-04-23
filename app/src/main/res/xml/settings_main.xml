@@ -8,7 +8,15 @@
         android:entries="@array/settings_order_by_labels"
         android:entryValues="@array/settings_order_by_values"
         android:key="@string/settings_order_by_key"
-        android:title="@string/settings_order_by_label" />
+        android:title="@string/settings_order_by_label_2" />
+
+    <ListPreference
+        android:defaultValue="@string/settings_locale_default"
+        android:entries="@array/settings_locale_labels"
+        android:entryValues="@array/settings_locale_values"
+        android:key="@string/settings_locale_key"
+        android:title="@string/settings_locale_label"
+        />
 
 </PreferenceScreen>
 

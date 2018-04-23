@@ -6,34 +6,31 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
 
         <!--  Used for settings preference theme -->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
-    <!-- main activity action bar styls -->
-    <style name="ActionBar.Solid.popularmovies2.NoTitle"
-        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:displayOptions">useLogo|showHome</item>
-        <item name="logo">@drawable/ic_movie_filter</item>
+    <style name="PreferenceThemeOverlay">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="AppTheme.Main" parent="@style/AppTheme">
-        <item name="actionBarStyle">@style/ActionBar.Solid.popularmovies2.NoTitle</item>
+    <style name="AppTheme.MovieDetail">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- Style used in the MovieActivity for the labels of the extra weather information -->
-    <style name="MovieLabel" parent="@style/TextAppearance.AppCompat.Title">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/movie_accent_label</item>
-        <item name="android:fontFamily">sans-serif</item>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopUpOverLay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.MenuLabelsStyle">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
-    <!-- Styles used in the MovieActivity for the values of the extra movie information -->
-    <style name="ExtraMovieInformation" parent="@style/TextAppearance.AppCompat.Headline">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
+
+
 </resources>

@@ -7,4 +7,5 @@
         <item name="android:textColor">@color/movie_accent_label</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
+
 </resources>

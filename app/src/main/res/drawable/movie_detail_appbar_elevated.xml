@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- TODO: COMPLETED -->
+
+<!-- https://stackoverflow.com/
+    questions/27080338/android-5-0-androidelevation-works-for-view-but-not-button-->
+<!-- https://github.com/boxme/
+    AndroidFAB/blob/master/app/src/main/res/anim/fab_state_list_animator.xml -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <objectAnimator
+            android:propertyName="elevation"
+            android:duration="1"
+            android:valueTo="8dp"
+            android:valueType="floatType" />
+    </item>
+</selector>

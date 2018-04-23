@@ -13,8 +13,8 @@ public class Video implements Parcelable {
     /* Review details layout contains video id, iso format (iso_639_1 or iso_3166_1), key, name
     site and size. */
 
-    /* int for the video Id */
-    private int mVideoId;
+    /* String for the video Id */
+    private String mVideoId;
 
     /* String for the video format iso_639_1 */
     private String mVideoIso_639_1;
@@ -39,7 +39,7 @@ public class Video implements Parcelable {
 
     /**
      * Public constructor
-     *  @param videoId is a integer that contains the video id.
+     * @param videoId is a string that contains the video id.
      * @param videoIso6391 is a string that contains the video format ISO_639_1
      * @param videoIso31661 is a string that contains the video format ISO_3166_1
      * @param videoKey is a string that contains the video key.
@@ -68,7 +68,7 @@ public class Video implements Parcelable {
      * @param in a parcel from which to read this object
      */
     private Video(Parcel in) {
-        mVideoId = in.readInt();
+        mVideoId = in.readString();
         mVideoIso_639_1 = in.readString();
         mVideoIso_3166_1 = in.readString();
         mVideoKey = in.readString();
@@ -84,8 +84,8 @@ public class Video implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mVideoId);
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(mVideoId);
         parcel.writeString(mVideoIso_639_1);
         parcel.writeString(mVideoIso_3166_1);
         parcel.writeString(mVideoKey);
@@ -100,10 +100,10 @@ public class Video implements Parcelable {
     /*********************/
 
     /* VIDEO ID */
-    public int getVideoId() {
+    public String getVideoId() {
         return mVideoId;
     }
-    public void setVideoId(int videoId) {
+    public void setVideoId(String videoId) {
         mVideoId = videoId;
     }
 
@@ -164,16 +164,16 @@ public class Video implements Parcelable {
     }
 
     /* Parcelable Creator */
-    public static final Creator<Review> CREATOR = new Creator<Review>() {
+    public static final Creator<Video> CREATOR = new Creator<Video>() {
 
         @Override
-        public Review createFromParcel(Parcel in) {
-            return new Review(in);
+        public Video createFromParcel(Parcel in) {
+            return new Video(in);
         }
 
         @Override
-        public Review[] newArray(int size) {
-            return new Review[size];
+        public Video[] newArray(int size) {
+            return new Video[size];
         }
     };
 
