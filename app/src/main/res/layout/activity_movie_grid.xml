@@ -9,6 +9,7 @@
     tools:context="com.luispuchades.popularmovies2.MovieGridActivity" >
 
     <fragment
+        android:name="com.luispuchades.popularmovies2.MovieGridFragment"
         android:id="@+id/fragment_movie_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

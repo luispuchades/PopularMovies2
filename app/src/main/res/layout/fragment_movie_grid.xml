@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MovieGridFragment">
 
-    <!-- TODO: COMPLETE -->
     <TextView
         android:id="@+id/tv_error_message_display"
         android:layout_width="match_parent"
